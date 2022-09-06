@@ -1,0 +1,28 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "scripts": {
+    "start": "node index.js",
+    "start-local": "node index.js localhost",
+    "dev": "nodemon index.js",
+    "dev-local": "nodemon index.js localhost"
+  },
+  "keywords": [],
+  "author": "qwert21, GlebSr",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.2.4",
+    "express": "^4.18.1",
+    "cors": "^2.8.5",
+    "express-fingerprint": "^1.2.2",
+    "https": "^1.0.0",
+    "module": "^1.0.0",
+    "node-telegram-bot-api": "^0.58.0",
+    "pg": "^8.7.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
