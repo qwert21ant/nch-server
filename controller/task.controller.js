@@ -68,7 +68,10 @@ async function findTask(task_id, user){
 
 class TaskController{
     async processRequest(req, res){
-        const {task_id, operation, key, answers} = req.body;
+        var {task_id, task_info, operation, key, answers} = req.body;
+        if(task_info) task_id = JSON.parse(task_info).id;
+        //const task_resub = task_info.resubmits;
+
         const fingerprint = req.fingerprint.hash
         let user = await userController.checkUser(req.ip, key, fingerprint);
 
