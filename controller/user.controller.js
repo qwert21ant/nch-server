@@ -3,8 +3,8 @@ const Log = require("../log")
 
 class UserController {
     async checkUser(ip, key, fingerprint){
-        const name = await db.query('SELECT name FROM users where ip = $1 AND key = $2 AND fingerprint = $3',
-            [ip, key, fingerprint]);
+        const name = await db.query('SELECT name FROM users where key = $1',
+            [key]);
 
         if(name.rowCount) return name.rows[0].name;
         return -1;
