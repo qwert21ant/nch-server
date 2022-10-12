@@ -1,12 +1,13 @@
 const TelegramAPI = require("node-telegram-bot-api")
 const userController = require("../controller/user.controller")
-const adminId = [792006690, 1123840846]
+const adminId = JSON.parse(process.env.BOT_ADMINS);
 
-const token = '5551117206:AAHg4QiVwBKba8Vy0-BC6CNwQrJhRwtWbYY'
+const token = process.env.BOT_TOKEN
 
-let telegramState = {"792006690": "", "1123840846": ""}
+let telegramState = {};
+adminId.forEach(key => telegramState[key] = '');
 
-const bot = new TelegramAPI(token, {polling:true})
+const bot = new TelegramAPI(token, {polling: true})
 
 bot.setMyCommands([
     {command: 'getallusers', description: 'Список пользователей'},

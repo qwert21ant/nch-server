@@ -1,6 +1,6 @@
 const bot = require("./tgbot/logBot");
 const Time = require("./serverTime")
-const UTC = 3;
+const UTC = process.env.DEFAULT_UTC;
 
 class Log{
     async log(message){
