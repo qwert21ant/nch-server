@@ -2,20 +2,19 @@ const db = require("../db")
 const Log = require("../log")
 
 class UserController {
-    async checkUser(ip, key, fingerprint){
-        const name = await db.query('SELECT name FROM users where key = $1',
+    async getUser(key){
+        const name = await db.query('SELECT id, name FROM users where key = $1',
             [key]);
 
-        if(name.rowCount) return name.rows[0].name;
-        return -1;
+        return name.rowCount ? name.rows[0] : null;
     }
 
-    async addUser(name, ip, key, fingerprint){
+    async addUser(name, key){
         const role = await db.query('SELECT role FROM users where name = $1', [name])
         if(!role.rowCount){
             try {
-                await db.query('INSERT INTO users (name, ip, key, fingerprint, role) values ($1, $2, $3, $4, $5)',
-                    [name, ip, key, fingerprint, "user"])
+                await db.query('INSERT INTO users (name, key, role) values ($1, $2, $3)',
+                    [name, key, "user"])
                 await Log.log(`user with key ${key} successfully added`)
                 return "user successfully added"
             } catch(err) {
