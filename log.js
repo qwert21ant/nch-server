@@ -1,12 +1,16 @@
-const bot = require("./tgbot/logBot");
 const Time = require("./serverTime")
+
 const UTC = process.env.DEFAULT_UTC;
+
+var bot = null;
+if(process.env.BOT_STATUS == "on") bot = require("./tgbot/logBot");
+
+const admins = JSON.parse(process.env.BOT_ADMINS);
 
 class Log{
     async log(message){
         console.log(Time.logTime(UTC) + " " + message);
-        await bot.sendMessage(792006690, Time.logTime(UTC) + " " + message)
-        await bot.sendMessage(1123840846, Time.logTime(UTC) + " " + message)
+        if(bot) admins.forEach(x => bot.sendMessage(x, Time.logTime(UTC) + " " + message));
     }
 }
 
