@@ -59,11 +59,20 @@ async function setTask(task_info, answers, user){
 
 async function findTask(task_info, user){
     try {
-        const answers = await db.query('SELECT answers FROM tasks where id = $1', [task_info.id]);
+        const answers = await db.query('SELECT * FROM tasks where id = $1', [task_info.id]);
 
         if(answers.rowCount){
+            var task = answers.rows[0];
             Log.log(`Task ${task_info.id} was found by user ${user.name}`);
-            return {status: "task found", answers: answers.rows[0].answers};
+            return {
+                status: "task found",
+                task_info: {
+                    id: task.id,
+                    author: (task.author ? 'known' : 'unknown'),
+                    resubmits: task.resubmits
+                },
+                answers: task.answers
+            };
         } else {
             Log.log(`Task ${task_info.id} was NOT found by user ${user.name}`);
             return {status: "task not found"};
@@ -79,14 +88,13 @@ class TaskController{
     async processRequest(req, res){
         const {task_id, operation, key, answers} = req.body;
 
-        var task_info = req.body.task_info ? JSON.parse(req.body.task_info) : {
+        var task_info = req.body.task_info ? req.body.task_info : {
             id: task_id,
             resubmits: null,
             mode: 'review'
         };
 
         let user = await userController.getUser(key);
-        console.log(user);
 
         if(user){
             task_info.author = task_info.mode == 'task' ? user.id : null;
