@@ -212,6 +212,7 @@ class ManageBot {
         }
 
         this.userState[chatId].command = "";
+        this.bot.deleteMessage(chatId, msgId);
     }
 }
 
