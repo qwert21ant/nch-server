@@ -7,7 +7,10 @@ const token = process.env.BOT_TOKEN
 let telegramState = {};
 adminId.forEach(key => telegramState[key] = '');
 
-const bot = new TelegramAPI(token, {polling: true})
+const bot = new TelegramAPI(token, {
+    polling: true,
+    baseApiUrl: process.env.BOT_API_URL ? process.env.BOT_API_URL : "https://api.telegram.org"
+})
 
 bot.setMyCommands([
     {command: 'getallusers', description: 'Список пользователей'},
