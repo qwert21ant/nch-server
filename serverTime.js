@@ -1,23 +1,20 @@
-class Time {
+const Time = {
     formatDate(date){
-        return  date.getDate().toString().padStart(2, "0") + "-" + 
-                date.getMonth().toString().padStart(2, "0") + "-" + 
-                date.getFullYear().toString().padStart(4, "0") + " " + 
-                date.getHours().toString().padStart(2, "0") + ":" + 
-                date.getMinutes().toString().padStart(2, "0") + ":" + 
-                date.getSeconds().toString().padStart(2, "0");
-    }
+        return  date.getUTCDate().toString().padStart(2, "0") + "-" + 
+                (date.getUTCMonth() + 1).toString().padStart(2, "0") + "-" + 
+                date.getUTCFullYear().toString().padStart(4, "0") + " " + 
+                date.getUTCHours().toString().padStart(2, "0") + ":" + 
+                date.getUTCMinutes().toString().padStart(2, "0") + ":" + 
+                date.getUTCSeconds().toString().padStart(2, "0");
+    },
 
     getUTCDate(utc){
-        let date = new Date();
-        date.setDate(date.getUTCDate());
-        date.setHours(date.getUTCHours() + utc);
-        return date;
-    }
+        return new Date((new Date()).getTime() + 3600 * 1000 * 3);
+    },
 
     logTime(utc){
         return `[${this.formatDate(this.getUTCDate(utc))}]`;
     }
 }
 
-module.exports = new Time()
+module.exports = Time; 
