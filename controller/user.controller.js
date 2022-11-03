@@ -65,7 +65,7 @@ class UserController {
 
     async getAllUsers(){
         const users = await db.query('SELECT name FROM users')
-        return users.rows
+        return users.rows.map(elem => elem.name)
     }
 
     async getUserInfo(name, row){
